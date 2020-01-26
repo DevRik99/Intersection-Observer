@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Intersection Observer</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .box {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s ease-in all;
+        }
+
+        .box:nth-child(1) {
+            background-color: #00794e;
+        }
+
+        .box:nth-child(2) {
+            background-color: #5aa900;
+        }
+
+        .box:nth-child(3) {
+            background-color: #a1d0c0;
+        }
+
+        .box:nth-child(4) {
+            background-color: #d5e7cd;
+        }
+
+        .active {
+            background-color: black !important;
+            color: whitesmoke !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+    </div>
+    <div class="box">
+    </div>
+    <div class="box">
+    </div>
+    <div class="box">
+    </div>
+    <div class="box">
+    </div>
+
+    <script>
+        const box = document.querySelectorAll(".box");
+        const callback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                    entry.target.innerText = "Intersection Observer API | NO CSS";
+                } else {
+                    entry.target.classList.remove("active")
+                    entry.target.innerText = "Fuera de foco";
+                }
+            });
+        }
+        const observer = new IntersectionObserver(callback, {
+            root: null,
+            threshold: 0.7
+        })
+        box.forEach(element => {
+            observer.observe(element)
+        })
+    </script>
+</body>
+
+</html>
